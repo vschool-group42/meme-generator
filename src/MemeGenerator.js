@@ -6,12 +6,15 @@ function MemeGenerator(props) {
     return (
         <form >
             <input
-
-                value={this.state.topInput}
+                id="topInput"
                 onChange={props.onChange}
             />
 
-            <button type="submit"></button>
+            <input
+                id="bottomInput"
+                onChange={props.onChange}
+            />
+
         </form>
     )
 }
