@@ -4,7 +4,6 @@ import '../styles/MemeList.css'
 class MemeList extends Component {
     constructor(props) {
         super(props)
-        console.log(props)
         this.state = {
             allMemes: [],
             mainMemeIndex: 0,
