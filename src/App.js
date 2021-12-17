@@ -26,9 +26,13 @@ class App extends Component {
   }
 
   render() {
+    const memesLength = this.state.userMemes.length
     return (
       <div className='App'>
-        <Header title='MEME GENERATOR' buttonText={this.state.listView ? 'CREATE' : 'VIEW ALL'} clickEvent={this.toggleView} />
+        <Header 
+          title='MEME GENERATOR' 
+          buttonText={this.state.listView ? 'CREATE' : `VIEW ALL (${memesLength})`} 
+          clickEvent={this.toggleView} />
         {!this.state.listView && <MemeGenerator addEvent={this.onAddMeme} />}
         {this.state.listView && <MemeList memes={this.state.userMemes} />}
       </div>
