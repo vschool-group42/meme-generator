@@ -13,16 +13,22 @@ class App extends Component {
     }
   }
 
-  onAddMeme(meme) {
+  onAddMeme = meme => {
     this.setState(prevState => ({
       userMemes: prevState.userMemes.push(meme)
+    }))
+  }
+
+  toggleView = () => {
+    this.setState(prevState => ({
+      listView: !prevState.listView
     }))
   }
 
   render() {
     return (
       <div className='App'>
-        <Header title='MEME GENERATOR' buttonText={this.state.listView ? 'CREATE' : 'VIEW ALL'} />
+        <Header title='MEME GENERATOR' buttonText={this.state.listView ? 'CREATE' : 'VIEW ALL'} clickEvent={this.toggleView} />
         {!this.state.listView && <MemeGenerator addEvent={this.onAddMeme} />}
         {this.state.listView && <MemeList memes={this.state.userMemes} />}
       </div>
