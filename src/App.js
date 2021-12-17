@@ -1,25 +1,30 @@
 import React, { Component } from 'react';
 import './App.css';
 import MemeGenerator from './components/MemeGenerator';
+import MemeList from './components/MemeList';
+import Header from './components/Header';
 
 class App extends Component {
   constructor() {
     super()
     this.state = {
-      memeArray: [],
+      userMemes: [],
+      listView: false,
     }
   }
 
-  componentDidMount() {
-    fetch("https://api.imgflip.com/get_memes")
-      .then(response => response.json())
-      .then(data => this.setState({memeArray: data.data.memes}))
+  onAddMeme(meme) {
+    this.setState(prevState => ({
+      userMemes: prevState.userMemes.push(meme)
+    }))
   }
 
   render() {
     return (
-      <div>
-        <MemeGenerator memes={this.state.memeArray} />
+      <div className='App'>
+        <Header title='MEME GENERATOR' buttonText={this.state.listView ? 'CREATE' : 'VIEW ALL'} />
+        {!this.state.listView && <MemeGenerator addEvent={this.onAddMeme} />}
+        {this.state.listView && <MemeList memes={this.state.userMemes} />}
       </div>
     )
   }
