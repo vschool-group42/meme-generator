@@ -61,7 +61,7 @@ class MemeList extends Component {
                 arrowDisplay = true
             }
             return (
-                <MemeCard key={i} memeObj={meme} fixedHeight={150} onClick={this.onMemeClicked} uniqueClass='list-item' />
+                <MemeCard key={i} index={i} memeObj={meme} fixedHeight={150} onClick={this.onMemeClicked} uniqueClass='list-item' />
             )
           })
 

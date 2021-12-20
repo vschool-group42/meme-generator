@@ -33,7 +33,7 @@ class App extends Component {
         <Header 
           title='MEME GENERATOR' 
           buttonText={this.state.listView ? 'CREATE' : `VIEW ALL (${memesLength})`} 
-          clickEvent={this.toggleView} />
+          clickEvent={memesLength > 0 ? this.toggleView : () => alert("You Haven't Created Any Memes Yet!")} />
         {!this.state.listView && <MemeGenerator addEvent={this.onAddMeme} />}
         {this.state.listView && <MemeList memes={this.state.userMemes} />}
       </div>

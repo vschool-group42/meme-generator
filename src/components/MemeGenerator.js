@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import MemeCard from "./MemeCard"
+import '../styles/MemeGenerator.css'
 
 
 class MemeGenerator extends Component {
@@ -14,7 +15,6 @@ class MemeGenerator extends Component {
                 url: "",
                 height: 100,
                 width: 100
-
             },
             newMeme: []
         }
@@ -36,17 +36,21 @@ class MemeGenerator extends Component {
                         width: selectedMeme.width,
                     }
                 }
-
             })
-
             )
     }
 
     handleRefresh() {
         this.setState(prevState => {
-            let random = Math.floor(Math.random() * prevState.arrayOfData.length)
+            let random = this.state.arrayOfData[Math.floor(Math.random() * prevState.arrayOfData.length)]
             return {
-                currentMeme: prevState.arrayOfData[random]
+                currentMeme: {
+                    topText: "",
+                    bottomText: "",
+                    url: random.url,
+                    height: random.height,
+                    width: random.width,
+                }
             }
         })
     }
@@ -65,35 +69,31 @@ class MemeGenerator extends Component {
 
     render() {
         return (
-            <main>
-                < form onSubmit={(e) => this.props.addEvent(e, this.state.currentMeme)} >
-
-
+            <main className='MemeGenerator'>
+                <MemeCard memeObj={this.state.currentMeme} fixedHeight={400} />
+                <form 
+                onSubmit={(e) => {
+                    this.handleRefresh()
+                    this.props.addEvent(e, this.state.currentMeme)}
+                    } >
                     <input
                         name="topText"
                         value={this.state.currentMeme.topText}
                         id="topText"
                         onChange={this.handleChange}
-                        placeholder="Top Text"
-                    />
-
+                        placeholder="Top Text" />
                     <input
                         name="bottomText"
                         value={this.state.currentMeme.bottomText}
                         id="bottomText"
                         onChange={this.handleChange}
-                        placeholder="Bottom Text"
-                    />
-                    <MemeCard memeObj={this.state.currentMeme} fixedHeight={400} />
-
+                        placeholder="Bottom Text" />
                     <button style={{ width: 75, height: 20 }}>Submit</button>
                 </form >
                 <button onClick={this.handleRefresh}>Refresh</button>
             </main>
-
         )
     }
-
 }
 
 export default MemeGenerator
