@@ -55,15 +55,7 @@ class MemeList extends Component {
                 arrowDisplay = true
             }
             return (
-                <MemeCard memeObj={meme} constHeight={150} />
-                // <img 
-                //     key={i} 
-                //     id={i}
-                //     className='meme list-item' 
-                //     src={meme.url} 
-                //     alt="" 
-                //     style={{width: newWidth, height: 150}} 
-                //     onClick={this.onMemeClicked} />
+                <MemeCard memeObj={meme} constHeight={150} onClick={this.onMemeClicked} uniqueClass='list-item' />
             )
           })
 
