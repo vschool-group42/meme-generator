@@ -1,30 +1,41 @@
 import React, { Component } from 'react';
-import './App.css';
 import MemeGenerator from './components/MemeGenerator';
-import MemeList from './components/MemeList'
+import MemeList from './components/MemeList';
+import Header from './components/Header';
+import './App.css';
 
 class App extends Component {
   constructor() {
     super()
     this.state = {
       userMemes: [],
+      listView: false,
     }
   }
 
-  onAddMeme(meme) {
+  onAddMeme = (e, meme) => {
+    e.preventDefault()
+    this.setState(prevState => {
+      return {userMemes: [...prevState.userMemes, meme]}
+    })
+  }
+
+  toggleView = () => {
     this.setState(prevState => ({
-      userMemes: prevState.userMemes.push(meme)
+      listView: !prevState.listView
     }))
   }
 
   render() {
+    const memesLength = this.state.userMemes.length
     return (
       <div className='App'>
-        <MemeGenerator addEvent={this.onAddMeme} />
-        <MemeList
-          memes={this.state.userMemes}
-          style={{ display: 'none' }} />
-
+        <Header 
+          title='MEME GENERATOR' 
+          buttonText={this.state.listView ? 'CREATE' : `VIEW ALL (${memesLength})`} 
+          clickEvent={this.toggleView} />
+        {!this.state.listView && <MemeGenerator addEvent={this.onAddMeme} />}
+        {this.state.listView && <MemeList memes={this.state.userMemes} />}
       </div>
     )
   }

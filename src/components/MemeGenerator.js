@@ -10,12 +10,13 @@ class MemeGenerator extends Component {
             currentMeme: {
                 topText: "",
                 bottomText: "",
-                url: ""
+                url: "",
+                height: 0,
+                width: 0
 
             },
             newMeme: []
         }
-        this.handleSubmit = this.handleSubmit.bind(this)
         this.handleChange = this.handleChange.bind(this)
         this.handleRefresh = this.handleRefresh.bind(this)
     }
@@ -24,24 +25,20 @@ class MemeGenerator extends Component {
         fetch("https://api.imgflip.com/get_memes")
             .then(response => response.json())
             .then(response => this.setState((prevState) => {
+                const selectedMeme = response.data.memes[Math.floor(Math.random() * response.data.memes.length)]
                 return {
                     arrayOfData: response.data.memes,
-                    currentMeme: response.data.memes[Math.floor(Math.random() * response.data.memes.length)]
-
+                    currentMeme: {
+                        ...prevState.currentMeme,
+                        url: selectedMeme.url,
+                        height: selectedMeme.height,
+                        width: selectedMeme.width,
+                    }
                 }
 
             })
 
             )
-
-
-    }
-
-
-
-    handleSubmit() {
-        this.props.addEvent(this.state.currentMeme)
-
     }
 
     handleRefresh() {
@@ -55,9 +52,12 @@ class MemeGenerator extends Component {
 
     handleChange(event) {
         const { name, value } = event.target
-        this.setState(() => {
+        this.setState((prevState) => {
             return {
-                [name]: value
+                currentMeme: {
+                    ...prevState.currentMeme,
+                    [name]: value
+                }
             }
         })
     }
@@ -65,7 +65,7 @@ class MemeGenerator extends Component {
     render() {
         return (
             <main>
-                < form onSubmit={this.handleSubmit} >
+                < form onSubmit={(e) => this.props.addEvent(e, this.state.currentMeme)} >
 
 
                     <input
