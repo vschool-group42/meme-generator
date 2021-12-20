@@ -1,0 +1,22 @@
+.MemeCard {
+    position: relative;
+    margin: 15px
+}
+
+.meme {
+    border: 3px solid white;
+    border-radius: 2px;
+    margin: 5px;
+    /* overflow: scroll; */
+}
+
+.meme-text {
+    position: absolute;
+    font-size: 24px;
+    left: 50%;
+    top: 10%;
+}
+
+.meme-text:last-child {
+    top: 90%;
+}
