@@ -1,52 +1,99 @@
 import React, { Component } from "react"
+import MemeCard from "./MemeCard"
 
 
-// memesArr = this.props.memes
 class MemeGenerator extends Component {
 
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
         this.state = {
-            currentMeme: {},
-            topInput: "",
-            bottomInput: "",
+            arrayOfData: [],
+            currentMeme: {
+                topText: "",
+                bottomText: "",
+                url: "",
+                height: 100,
+                width: 100
+
+            },
             newMeme: []
         }
-
-        this.handleSubmit = this.handleSubmit.bind(this)
         this.handleChange = this.handleChange.bind(this)
+        this.handleRefresh = this.handleRefresh.bind(this)
     }
 
-    handleSubmit() {
+    componentDidMount() {
+        fetch("https://api.imgflip.com/get_memes")
+            .then(response => response.json())
+            .then(response => this.setState((prevState) => {
+                const selectedMeme = response.data.memes[Math.floor(Math.random() * response.data.memes.length)]
+                return {
+                    arrayOfData: response.data.memes,
+                    currentMeme: {
+                        ...prevState.currentMeme,
+                        url: selectedMeme.url,
+                        height: selectedMeme.height,
+                        width: selectedMeme.width,
+                    }
+                }
 
+            })
+
+            )
     }
-  
+
+    handleRefresh() {
+        this.setState(prevState => {
+            let random = Math.floor(Math.random() * prevState.arrayOfData.length)
+            return {
+                currentMeme: prevState.arrayOfData[random]
+            }
+        })
+    }
+
     handleChange(event) {
-      event.preventDefault()
-      const { name, value } = event.target
-      this.setState({ [name]: value })
+        const { name, value } = event.target
+        this.setState((prevState) => {
+            return {
+                currentMeme: {
+                    ...prevState.currentMeme,
+                    [name]: value
+                }
+            }
+        })
     }
 
     render() {
         return (
-            <form >
-                <input
-                    id="topInput"
-                    onChange={this.handleChange}
-                />
-    
-                <input
-                    id="bottomInput"
-                    onChange={this.handleChange}
-                />
-    
-            </form>
+            <main>
+                < form onSubmit={(e) => this.props.addEvent(e, this.state.currentMeme)} >
+
+
+                    <input
+                        name="topText"
+                        value={this.state.currentMeme.topText}
+                        id="topText"
+                        onChange={this.handleChange}
+                        placeholder="Top Text"
+                    />
+
+                    <input
+                        name="bottomText"
+                        value={this.state.currentMeme.bottomText}
+                        id="bottomText"
+                        onChange={this.handleChange}
+                        placeholder="Bottom Text"
+                    />
+                    <MemeCard memeObj={this.state.currentMeme} fixedHeight={400} />
+
+                    <button style={{ width: 75, height: 20 }}>Submit</button>
+                </form >
+                <button onClick={this.handleRefresh}>Refresh</button>
+            </main>
+
         )
     }
+
 }
-
-
-
-
 
 export default MemeGenerator

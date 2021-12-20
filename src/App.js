@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import './App.css';
 import MemeGenerator from './components/MemeGenerator';
 import MemeList from './components/MemeList';
 import Header from './components/Header';
+import './App.css';
 
 class App extends Component {
   constructor() {
@@ -13,10 +13,11 @@ class App extends Component {
     }
   }
 
-  onAddMeme = meme => {
-    this.setState(prevState => ({
-      userMemes: prevState.userMemes.push(meme)
-    }))
+  onAddMeme = (e, meme) => {
+    e.preventDefault()
+    this.setState(prevState => {
+      return {userMemes: [...prevState.userMemes, meme]}
+    })
   }
 
   toggleView = () => {
