@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import MemeCard from "./MemeCard"
 
 
 class MemeGenerator extends Component {
@@ -11,8 +12,8 @@ class MemeGenerator extends Component {
                 topText: "",
                 bottomText: "",
                 url: "",
-                height: 0,
-                width: 0
+                height: 100,
+                width: 100
 
             },
             newMeme: []
@@ -83,13 +84,7 @@ class MemeGenerator extends Component {
                         onChange={this.handleChange}
                         placeholder="Bottom Text"
                     />
-                    <div>
-                        {console.log(this.state.currentMeme.url)}
-                        <img src={this.state.currentMeme.url} style={{ width: 400, height: 400 }} alt="" />
-                        <h1>{this.state.currentMeme.topText}</h1>
-                        <h1>{this.state.currentMeme.bottomText}</h1>
-
-                    </div>
+                    <MemeCard memeObj={this.state.currentMeme} fixedHeight={400} />
 
                     <button style={{ width: 75, height: 20 }}>Submit</button>
                 </form >
@@ -100,9 +95,5 @@ class MemeGenerator extends Component {
     }
 
 }
-
-
-
-
 
 export default MemeGenerator

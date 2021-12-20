@@ -1,16 +1,16 @@
 import React from 'react'
 import '../styles/MemeCard.css'
 
-function MemeCard({ memeObj, constHeight }) {
+function MemeCard({ memeObj, fixedHeight, onClick, uniqueClass }) {
 
     const {url, topText, bottomText, height, width} = memeObj
-    const newWidth = constHeight / height * width
+    const newWidth = fixedHeight / height * width
     return (
-        <div className='MemeCard' onClick={null} style={{height: constHeight, width: newWidth}}>
+        <div className={uniqueClass ? `MemeCard ${uniqueClass}` : 'MemeCard'} onClick={onClick} style={{height: fixedHeight, width: newWidth}}>
             <img 
                 className='meme' 
                 src={url} 
-                style={{width: '100%', height: '100%'}}
+                style={{height: fixedHeight, width: newWidth}}
                 alt="selected meme" />
                 
             <div className="meme-text">{topText}</div>

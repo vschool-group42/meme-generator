@@ -1,31 +1,85 @@
 import React, { Component } from 'react'
+import MemeCard from './MemeCard'
 import '../styles/MemeList.css'
 
 class MemeList extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            allMemes: [],
-            mainMemeIndex: 0,
+            allMemes: [
+                {url: 'https://i.imgflip.com/30b1gx.jpg', topText: "hello", bottomText: 'world', width: 1200, height: 1200}
+            ],
+            currentIndex: 0,
+        }
+    }
+
+    componentDidMount() {
+        this.setState(() => {
+            return {allMemes: [...this.props.memes]}
+        })
+    }
+
+    onRightArrowClicked = () => {
+        this.setState(prevState => {
+            const shiftedArray = prevState.allMemes.map((meme, i) => {
+                if (i > prevState.allMemes.length - 2) {
+                    return prevState.allMemes[0]
+                }
+                return prevState.allMemes[i + 1]
+            })
+            return {allMemes: shiftedArray}
+        })
+    }
+
+    onLeftArrowClicked = () => {
+        this.setState(prevState => {
+            const shiftedArray = prevState.allMemes.map((meme, i) => {
+                if (i === 0) {
+                    return prevState.allMemes.at(-1)
+                }
+                return prevState.allMemes[i - 1]
+            })
+            return {allMemes: shiftedArray}
+        })
+    }
+
+    onMemeClicked = (e) => {
+        const newIndex = parseInt(e.target.id)
+        if (this.state.currentIndex !== newIndex) {
+            this.setState({currentIndex: newIndex})
         }
     }
 
     render() {
+        let arrowDisplay = false
+        let maxWidth = 0
         const memes = this.state.allMemes.map((meme, i) => {
             const sizeRatio = 150 / meme.height
+            const newWidth = meme.width * sizeRatio
+            maxWidth += newWidth
+            if (maxWidth + 130 > window.innerWidth) { // +130 adds padding for non scroll view
+                arrowDisplay = true
+            }
             return (
-                <img key={i} className='meme' src={meme.url} alt="" style={{ width: meme.width * sizeRatio, height: 150 }} />
+                <MemeCard memeObj={meme} fixedHeight={150} onClick={this.onMemeClicked} uniqueClass='' />
             )
-        })
+          })
+
+        const selectedMeme = this.state.allMemes[this.state.currentIndex]
+    
         return (
             <div>
-                <div className='main-container'>
-                    <img className='meme' src="https://i.imgflip.com/30b1gx.jpg" alt="" style={{ width: 400, height: 400 }} />
-                </div>
+                <MemeCard memeObj={selectedMeme} fixedHeight={400} />
                 <div className='list-container'>
                     {memes}
-                    <div className="arrow" style={{ left: 0, display: this.state.mainMemeIndex === 0 ? 'none' : 'block' }}>&lsaquo;</div>
-                    <div className="arrow" style={{ right: 0, display: this.state.mainMemeIndex === (this.state.allMemes.length - 1) ? 'none' : 'block' }}>&rsaquo;</div>
+                    <div 
+                        className="arrow" 
+                        style={{left: 0, display: arrowDisplay ? 'block' : 'none'}} 
+                        onClick={this.onLeftArrowClicked}>&lsaquo;</div>
+                    <div 
+                        className="arrow" 
+                        style={{right: 0, display: arrowDisplay ? 'block' : 'none'}} 
+                        onClick={this.onRightArrowClicked}>&rsaquo;</div>
                 </div>
             </div>
         )
