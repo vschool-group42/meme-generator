@@ -10,7 +10,6 @@ function MemeCard({ memeObj, fixedHeight, onClick, uniqueClass }) {
             <img 
                 className='meme' 
                 src={url} 
-                style={{height: fixedHeight, width: newWidth}}
                 alt="selected meme" />
                 
             <div className="meme-text">{topText}</div>
