@@ -1,22 +1,9 @@
-.selected-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 15px
-}
 
 .list-container {
     position: relative;
     display: flex;
     flex-direction: row;
     background-color: rgba(190, 190, 190, 0.384);
-}
-
-.meme {
-    border: 3px solid white;
-    border-radius: 2px;
-    margin: 5px;
-    /* overflow: scroll; */
 }
 
 .list-item:hover {
