@@ -7,7 +7,13 @@ class MemeList extends Component {
         super(props)
         this.state = {
             allMemes: [
-                {url: 'https://i.imgflip.com/30b1gx.jpg', topText: "hello", bottomText: 'world', width: 1200, height: 1200}
+                {
+                    topText: "",
+                    bottomText: "",
+                    url: "",
+                    height: 100,
+                    width: 100,
+                }
             ],
             currentIndex: 0,
         }
@@ -50,13 +56,41 @@ class MemeList extends Component {
         }
     }
 
+    onDeleteEvent = () => {
+        this.props.deleteEvent(this.state.allMemes[this.state.currentIndex].url)
+        this.setState(prevState => {
+            prevState.allMemes.splice(prevState.currentIndex, 1)
+            if (prevState.allMemes.length === 0) {
+                return ({
+                    allMemes: [{
+                        topText: "",
+                        bottomText: "",
+                        url: "",
+                        height: 100,
+                        width: 100,
+                    }],
+                    currentIndex: 0
+                })
+            }
+            else {
+                return ({
+                    allMemes: [...prevState.allMemes],
+                    currentIndex: 0, 
+                })
+            }
+        })
+    }
+
+    onEditEvent = () => {
+        
+    }
+
     render() {
         let arrowDisplay = false
         let maxWidth = 0
         const memes = this.state.allMemes.map((meme, i) => {
             const sizeRatio = 150 / meme.height
             const newWidth = meme.width * sizeRatio
-            console.log(maxWidth, window.innerWidth)
             maxWidth += newWidth
             if (maxWidth + 130 > window.innerWidth) { // +130 adds padding for non scroll view
                 arrowDisplay = true
@@ -79,6 +113,8 @@ class MemeList extends Component {
         return (
             <div className='MemeList'>
                 <MemeCard memeObj={selectedMeme} fixedHeight={400} />
+                <button>EDIT</button>
+                <button onClick={this.onDeleteEvent}>DELETE</button>
                 <div 
                         className="arrow" 
                         style={{left: 60, display: arrowDisplay ? 'block' : 'none'}} 

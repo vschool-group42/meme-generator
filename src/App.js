@@ -26,6 +26,17 @@ class App extends Component {
     }))
   }
 
+  onDelete = (memeUrl) => {
+    for (let i = 0; i < this.state.userMemes.length; i++) {
+      if (this.state.userMemes[i].url === memeUrl) {
+        this.setState(prevState => {
+          prevState.userMemes.splice(i, 1)
+          return {userMemes: [...prevState.userMemes]}
+        })
+      }
+    }
+  }
+
   render() {
     const memesLength = this.state.userMemes.length
     return (
@@ -33,9 +44,9 @@ class App extends Component {
         <Header 
           title='MEME GENERATOR' 
           buttonText={this.state.listView ? 'CREATE' : `VIEW ALL (${memesLength})`} 
-          clickEvent={memesLength > 0 ? this.toggleView : () => alert("You Haven't Created Any Memes Yet!")} />
+          clickEvent={(memesLength > 0 || this.state.listView) ? this.toggleView : () => alert("You Haven't Created Any Memes Yet!")} />
         {!this.state.listView && <MemeGenerator addEvent={this.onAddMeme} />}
-        {this.state.listView && <MemeList memes={this.state.userMemes} />}
+        {this.state.listView && <MemeList memes={this.state.userMemes} deleteEvent={this.onDelete} />}
       </div>
     )
   }

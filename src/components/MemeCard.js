@@ -14,7 +14,7 @@ function MemeCard({ memeObj, fixedHeight, onClick, uniqueClass, index, textSize}
                 className='meme' 
                 src={url} 
                 id={index}
-                alt="selected meme" />
+                alt="" />
                 
             <div className="meme-text" style={{fontSize: textSize}}>{topText}</div>
             <div className="meme-text"style={{fontSize: textSize}}>{bottomText}</div>

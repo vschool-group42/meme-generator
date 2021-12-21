@@ -43,3 +43,23 @@
     cursor: pointer;
     transform: scale(1.2);
 }
+
+.MemeList button {
+    height: 30px;
+    width: 100px;
+    font-size: 20px;
+    border: none; 
+    border-radius: 4px;
+    color: #4c6dcd;
+    background-color: white;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-left: 10px;
+    transition: 200ms;
+}
+
+.MemeList button:hover {
+    cursor: pointer;
+    background-color: #4c6dcd;
+    color: white;
+}
