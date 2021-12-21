@@ -68,6 +68,30 @@ class App extends Component {
     this.toggleView()
   }
 
+  onRightArrowClicked = () => {
+    this.setState(prevState => {
+        const shiftedArray = prevState.userMemes.map((meme, i) => {
+            if (i > prevState.userMemes.length - 2) {
+                return prevState.userMemes[0]
+            }
+            return prevState.userMemes[i + 1]
+        })
+        return {userMemes: shiftedArray}
+    })
+}
+
+onLeftArrowClicked = () => {
+  this.setState(prevState => {
+      const shiftedArray = prevState.userMemes.map((meme, i) => {
+          if (i === 0) {
+              return prevState.userMemes.at(-1)
+          }
+          return prevState.userMemes[i - 1]
+      })
+      return {userMemes: shiftedArray}
+  })
+}
+
   render() {
     const memesLength = this.state.userMemes.length
     return (
@@ -75,9 +99,16 @@ class App extends Component {
         <Header 
           title='MEME GENERATOR' 
           buttonText={this.state.listView ? 'CREATE' : `VIEW ALL (${memesLength})`} 
-          clickEvent={(memesLength > 0 || this.state.listView) ? this.toggleView : () => alert("You Haven't Created Any Memes Yet!")} />
+          clickEvent={memesLength > 0 ? this.toggleView : () => alert("You Haven't Created Any Memes Yet!")} />
         {!this.state.listView && <MemeGenerator addEvent={this.onAddMeme} saveEvent={this.onSaveMeme} edit={this.state.edit} />}
-        {this.state.listView && <MemeList memes={this.state.userMemes} deleteEvent={this.onDelete} editEvent={this.onEdit} />}
+        {this.state.listView && <MemeList 
+                                  memes={this.state.userMemes} 
+                                  deleteEvent={this.onDelete} 
+                                  leftArrowEvent={this.onLeftArrowClicked}
+                                  rightArrowEvent={this.onRightArrowClicked}
+                                  editEvent={this.onEdit} 
+                                />
+        }
       </div>
     )
   }
