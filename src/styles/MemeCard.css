@@ -1,0 +1,26 @@
+.MemeCard {
+    position: relative;
+    margin: 15px
+}
+
+.meme {
+    border: 3px solid white;
+    border-radius: 2px;
+    height: 100%;
+    width: 100%;
+    margin: 5px;
+}
+
+.meme-text {
+    position: absolute;
+    font-size: 30px;
+    font-weight: bolder;
+    border-radius: 3px;
+    background-color: rgba(255, 255, 255, 0.432);
+    left: 20%;
+    top: 10%;
+}
+
+.meme-text:last-child {
+    top: 90%;
+}
