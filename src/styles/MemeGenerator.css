@@ -1,6 +1,5 @@
 .MemeGenerator {
     display: flex;
-    color: white;
     font-weight: bold;
     flex-direction: column;
     align-items: center;
@@ -33,5 +32,4 @@
     cursor: pointer;
     background-color: #4c6dcd;
     color: white;
-
 }
