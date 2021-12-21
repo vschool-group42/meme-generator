@@ -10,6 +10,10 @@ class App extends Component {
     this.state = {
       userMemes: [],
       listView: false,
+      edit: {
+        status: false,
+        meme: {}
+      }
     }
   }
 
@@ -19,6 +23,22 @@ class App extends Component {
       return {userMemes: [...prevState.userMemes, meme]}
     })
   }
+
+  onSaveMeme = (e, meme) => {
+    e.preventDefault()
+    this.setState(prevState => {
+      for (let i = 0; i < prevState.userMemes.length; i++) {
+        if (prevState.userMemes[i].url === meme.url) {
+          prevState.userMemes[i] = {
+            ...meme
+          }
+          return {userMemes: [...prevState.userMemes], edit: {status: false, meme: {}}}
+        }
+      }
+    })
+    this.toggleView()
+  }
+
 
   toggleView = () => {
     this.setState(prevState => ({
@@ -35,6 +55,17 @@ class App extends Component {
         })
       }
     }
+    if (this.state.userMemes.length === 1) {
+      this.toggleView()
+    }
+  }
+
+  onEdit = (memeObj) => {
+    this.setState({edit: {
+      status: true,
+      meme: memeObj
+    }})
+    this.toggleView()
   }
 
   render() {
@@ -45,8 +76,8 @@ class App extends Component {
           title='MEME GENERATOR' 
           buttonText={this.state.listView ? 'CREATE' : `VIEW ALL (${memesLength})`} 
           clickEvent={(memesLength > 0 || this.state.listView) ? this.toggleView : () => alert("You Haven't Created Any Memes Yet!")} />
-        {!this.state.listView && <MemeGenerator addEvent={this.onAddMeme} />}
-        {this.state.listView && <MemeList memes={this.state.userMemes} deleteEvent={this.onDelete} />}
+        {!this.state.listView && <MemeGenerator addEvent={this.onAddMeme} saveEvent={this.onSaveMeme} edit={this.state.edit} />}
+        {this.state.listView && <MemeList memes={this.state.userMemes} deleteEvent={this.onDelete} editEvent={this.onEdit} />}
       </div>
     )
   }

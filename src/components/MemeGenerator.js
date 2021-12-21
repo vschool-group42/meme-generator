@@ -16,7 +16,6 @@ class MemeGenerator extends Component {
                 height: 100,
                 width: 100,
             },
-            newMeme: []
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleRefresh = this.handleRefresh.bind(this)
@@ -26,7 +25,21 @@ class MemeGenerator extends Component {
         fetch("https://api.imgflip.com/get_memes")
             .then(response => response.json())
             .then(response => this.setState((prevState) => {
-                const selectedMeme = response.data.memes[Math.floor(Math.random() * response.data.memes.length)]
+                let selectedMeme;
+                if (this.props.edit.status) {
+                    selectedMeme = this.props.edit.meme
+                    return {
+                        arrayOfData: response.data.memes,
+                        currentMeme: {
+                            topText: selectedMeme.topText,
+                            bottomText: selectedMeme.bottomText,
+                            url: selectedMeme.url,
+                            height: selectedMeme.height,
+                            width: selectedMeme.width,
+                        }
+                    }
+                } 
+                selectedMeme = response.data.memes[Math.floor(Math.random() * response.data.memes.length)]
                 return {
                     arrayOfData: response.data.memes,
                     currentMeme: {
@@ -72,8 +85,12 @@ class MemeGenerator extends Component {
             <main className='MemeGenerator'>
                 <MemeCard memeObj={this.state.currentMeme} fixedHeight={400} />
                 <form onSubmit={(e) => {
-                        this.handleRefresh()
-                        this.props.addEvent(e, this.state.currentMeme)}
+                    if (this.props.edit.status) {
+                        this.props.saveEvent(e, this.state.currentMeme)
+                    } else {
+                            this.handleRefresh()
+                            this.props.addEvent(e, this.state.currentMeme)}
+                        }
                         }>
                     <input
                         name="topText"
@@ -89,7 +106,7 @@ class MemeGenerator extends Component {
                         onChange={this.handleChange}
                         placeholder="Bottom Text" 
                     />
-                    <button>Submit</button>
+                    <button>{this.props.edit.status ? 'SAVE' : 'SUBMIT'}</button>
                 </form >
                 <button onClick={this.handleRefresh}>Refresh</button>
             </main>

@@ -62,13 +62,15 @@ class MemeList extends Component {
             prevState.allMemes.splice(prevState.currentIndex, 1)
             if (prevState.allMemes.length === 0) {
                 return ({
-                    allMemes: [{
-                        topText: "",
-                        bottomText: "",
-                        url: "",
-                        height: 100,
-                        width: 100,
-                    }],
+                    allMemes: [
+                        {
+                            topText: "",
+                            bottomText: "",
+                            url: "",
+                            height: 100,
+                            width: 100,
+                        }
+                    ],
                     currentIndex: 0
                 })
             }
@@ -82,7 +84,7 @@ class MemeList extends Component {
     }
 
     onEditEvent = () => {
-        
+        this.props.editEvent(this.state.allMemes[this.state.currentIndex])
     }
 
     render() {
@@ -113,7 +115,7 @@ class MemeList extends Component {
         return (
             <div className='MemeList'>
                 <MemeCard memeObj={selectedMeme} fixedHeight={400} />
-                <button>EDIT</button>
+                <button onClick={this.onEditEvent}>EDIT</button>
                 <button onClick={this.onDeleteEvent}>DELETE</button>
                 <div 
                         className="arrow" 
