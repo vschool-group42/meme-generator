@@ -54,8 +54,10 @@ class MemeList extends Component {
         return (
             <div className='MemeList'>
                 <MemeCard memeObj={selectedMeme} fixedHeight={400} />
-                <button onClick={this.onEditEvent}>EDIT</button>
-                <button onClick={this.onDeleteEvent}>DELETE</button>
+                <div className='buttons-container'>
+                    <button onClick={this.onEditEvent}>EDIT</button>
+                    <button onClick={this.onDeleteEvent}>DELETE</button>
+                </div>
                 <div 
                         className="arrow" 
                         style={{left: 60, display: arrowDisplay ? 'block' : 'none'}} 
