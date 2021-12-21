@@ -14,7 +14,7 @@ class MemeGenerator extends Component {
                 bottomText: "",
                 url: "",
                 height: 100,
-                width: 100
+                width: 100,
             },
             newMeme: []
         }
@@ -71,24 +71,25 @@ class MemeGenerator extends Component {
         return (
             <main className='MemeGenerator'>
                 <MemeCard memeObj={this.state.currentMeme} fixedHeight={400} />
-                <form 
-                onSubmit={(e) => {
-                    this.handleRefresh()
-                    this.props.addEvent(e, this.state.currentMeme)}
-                    } >
+                <form onSubmit={(e) => {
+                        this.handleRefresh()
+                        this.props.addEvent(e, this.state.currentMeme)}
+                        }>
                     <input
                         name="topText"
                         value={this.state.currentMeme.topText}
                         id="topText"
                         onChange={this.handleChange}
-                        placeholder="Top Text" />
+                        placeholder="Top Text" 
+                    />
                     <input
                         name="bottomText"
                         value={this.state.currentMeme.bottomText}
                         id="bottomText"
                         onChange={this.handleChange}
-                        placeholder="Bottom Text" />
-                    <button style={{ width: 75, height: 20 }}>Submit</button>
+                        placeholder="Bottom Text" 
+                    />
+                    <button>Submit</button>
                 </form >
                 <button onClick={this.handleRefresh}>Refresh</button>
             </main>

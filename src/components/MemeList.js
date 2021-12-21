@@ -56,30 +56,41 @@ class MemeList extends Component {
         const memes = this.state.allMemes.map((meme, i) => {
             const sizeRatio = 150 / meme.height
             const newWidth = meme.width * sizeRatio
+            console.log(maxWidth, window.innerWidth)
             maxWidth += newWidth
             if (maxWidth + 130 > window.innerWidth) { // +130 adds padding for non scroll view
                 arrowDisplay = true
             }
             return (
-                <MemeCard key={i} index={i} memeObj={meme} fixedHeight={150} onClick={this.onMemeClicked} uniqueClass='list-item' />
+                <MemeCard 
+                    key={i} 
+                    index={i} 
+                    memeObj={meme} 
+                    fixedHeight={150} 
+                    onClick={this.onMemeClicked} 
+                    uniqueClass='list-item' 
+                    textSize={12}
+                />
             )
           })
 
         const selectedMeme = this.state.allMemes[this.state.currentIndex]
     
         return (
-            <div>
+            <div className='MemeList'>
                 <MemeCard memeObj={selectedMeme} fixedHeight={400} />
+                <div 
+                        className="arrow" 
+                        style={{left: 60, display: arrowDisplay ? 'block' : 'none'}} 
+                        onClick={this.onLeftArrowClicked}>&lsaquo;
+                </div>
+                <div 
+                    className="arrow" 
+                    style={{right: 60, display: arrowDisplay ? 'block' : 'none'}} 
+                    onClick={this.onRightArrowClicked}>&rsaquo;
+                </div>
                 <div className='list-container'>
                     {memes}
-                    <div 
-                        className="arrow" 
-                        style={{left: 0, display: arrowDisplay ? 'block' : 'none'}} 
-                        onClick={this.onLeftArrowClicked}>&lsaquo;</div>
-                    <div 
-                        className="arrow" 
-                        style={{right: 0, display: arrowDisplay ? 'block' : 'none'}} 
-                        onClick={this.onRightArrowClicked}>&rsaquo;</div>
                 </div>
             </div>
         )
