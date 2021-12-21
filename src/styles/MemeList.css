@@ -44,6 +44,10 @@
     transform: scale(1.2);
 }
 
+.buttons-container {
+    display: flex;
+}
+
 .MemeList button {
     height: 30px;
     width: 100px;
