@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import MemeCard from "./MemeCard"
 import '../styles/MemeGenerator.css'
 
+//random
 
 class MemeGenerator extends Component {
 
