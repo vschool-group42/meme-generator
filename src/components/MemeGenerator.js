@@ -106,9 +106,9 @@ class MemeGenerator extends Component {
                         onChange={this.handleChange}
                         placeholder="Bottom Text" 
                     />
-                    <button>{this.props.edit.status ? 'SAVE' : 'SUBMIT'}</button>
+                    <button>{this.props.edit.status ? 'Save' : 'Submit'}</button>
                 </form >
-                <button onClick={this.handleRefresh}>Refresh</button>
+                <button onClick={this.handleRefresh} style={{display:this.props.edit.status ? 'none' : 'block' }}>Refresh</button>
             </main>
         )
     }
